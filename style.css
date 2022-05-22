@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.card-img-top {
+    height: 50%;
+    width: 200px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 5%;
+}
+
+.admin-img {
+    width: 100px;
+}
+
+.successInsert {
+    color: green;
+    margin-bottom: 20px;
+}
