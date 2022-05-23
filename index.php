@@ -1,3 +1,6 @@
+<?php
+  include_once('./includes/connectDatabase.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,6 +122,31 @@
         <!--Sidenav-->
         <ul class="navbar-nav me-auto text-center">
             <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h4>Brands</h4></a></li>
+            <?php
+              $SelectStmt = $db->prepare('SELECT * FROM `brands`');
+              $SelectStmt->execute();
+              $brands = $SelectStmt->fetchAll();
+              foreach($brands as $brand){
+                $title = $brand['brand_title'];
+                $id = $brand['brand_id'];
+                echo "<li class='nav-item'><a href='index.php?brand=$id' class='nav-link text-light'>$title</a></li>";
+                
+              }
+            ?>
+        </ul>
+        <ul class="navbar-nav me-auto text-center">
+            <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h4>Categories</h4></a></li>
+            <?php
+              $SelectStmt = $db->prepare('SELECT * FROM `categories`');
+              $SelectStmt->execute();
+              $categories = $SelectStmt->fetchAll();
+              foreach($categories as $category){
+                $title = $category['categorie_title'];
+                $id = $category['categorie_id'];
+                echo "<li class='nav-item'><a href='index.php?category=$id' class='nav-link text-light'>$title</a></li>";
+                
+              }
+            ?>
         </ul>
     </div>
 </div>

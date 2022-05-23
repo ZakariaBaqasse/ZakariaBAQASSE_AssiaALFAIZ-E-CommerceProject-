@@ -38,7 +38,7 @@
                   <p class="text-center text-light">Admin Name</p>
               </div>
               <div class="button text-center">
-                  <button class="ms-3"><a href="" class="nav-link text-light bg-info my-1 p-2">Insert Products</a></button>
+                  <button class="ms-3"><a href="insertProducts.php" class="nav-link text-light bg-info my-1 p-2">Insert Products</a></button>
                   <button><a href="" class="nav-link text-light bg-info my-1 p-2">View Products</a></button>
                   <button><a href="index.php?insert_categories" class="nav-link text-light bg-info my-1 p-2">Insert Categories</a></button>
                   <button><a href="" class="nav-link text-light bg-info my-1 p-2">View Categories</a></button>
