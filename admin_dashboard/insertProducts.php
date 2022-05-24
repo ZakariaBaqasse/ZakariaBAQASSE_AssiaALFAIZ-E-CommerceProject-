@@ -1,3 +1,6 @@
+<?php
+include_once('../includes/connectDatabase.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,22 +37,34 @@
              <div class="form-outline mb-4 w-50 m-auto">
                  <select name="product_categories" id="" class="form-select">
                      <option value="">Select a category</option>
-                     <option value="">Smartphone</option>
-                     <option value="">Phones</option>
-                     <option value="">Watch</option>
-                     <option value="">Headphones</option>
-                     <option value="">SD Card</option>
+                     <?php
+                        $SelectStmt = $db->prepare('SELECT * FROM `categories`');
+                        $SelectStmt->execute();
+                        $categories = $SelectStmt->fetchAll();
+                        foreach($categories as $category){
+                           $title = $category['categorie_title'];
+                            $id = $category['categorie_id'];
+                            echo "<option value='$id'>$title</option>";
+                
+                        }
+                     ?>
                  </select>
              </div>
               <!--brands-->
               <div class="form-outline mb-4 w-50 m-auto">
                  <select name="product_brands" id="" class="form-select">
                      <option value="">Select a brand</option>
-                     <option value="">brand</option>
-                     <option value="">brand</option>
-                     <option value="">brand</option>
-                     <option value="">brand</option>
-                     <option value="">brand</option>
+                     <?php
+                        $SelectStmt = $db->prepare('SELECT * FROM `brands`');
+                        $SelectStmt->execute();
+                        $brands = $SelectStmt->fetchAll();
+                        foreach($brands as $brand){
+                           $title = $brand['brand_title'];
+                            $id = $category['brand_id'];
+                            echo "<option value='$id'>$title</option>";
+                
+                        }
+                     ?>
                  </select>
              </div>
              <!--Image 1-->
