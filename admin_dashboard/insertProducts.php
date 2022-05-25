@@ -1,5 +1,41 @@
 <?php
 include_once('../includes/connectDatabase.php');
+$keywordsRegex = "/[a-zA-Z0-9]{2,}(?:,)?/";
+if(isset($_POST['insert_product'])){
+    $product_title = htmlspecialchars($_POST['product_title']);
+    $description = htmlspecialchars($_POST['description']); 
+    $keywords = htmlspecialchars($_POST['keywords']);
+    $product_categories = htmlspecialchars($_POST['product_categories']);
+    $product_brands = htmlspecialchars($_POST['product_brands']);
+    $price = htmlspecialchars($_POST['price']);
+    $status = 'true';
+    //accessing image names
+    $image1 = $_FILES['image1']['name'];
+    $image2 = $_FILES['image2']['name'];
+    $image3 = $_FILES['image3']['name'];
+    //accessing image temp names
+    $temp_image1 = $_FILES['image1']['tmp_name'];
+    $temp_image2 = $_FILES['image2']['tmp_name'];
+    $temp_image3 = $_FILES['image3']['tmp_name'];
+    if(!preg_match($keywordsRegex,$keywords)){
+        echo ("Please enter a comma separated list of keywords (example: keyword1, keyword2, keyword3)");
+        exit();
+    }else{
+        move_uploaded_file($temp_image1,"./productsImages/$image1");
+        move_uploaded_file($temp_image2,"./productsImages/$image2");
+        move_uploaded_file($temp_image3,"./productsImages/$image3");
+        $insertProductQuery = "insert into `products` 
+                               (product_title,product_description,product_keywords,categorie_id,brand_id,product_image1,product_image2,product_image3,product_price,date,status) 
+                               values ('$product_title','$description','$keywords','$product_categories','$product_brands','$image1','$image2','$image3',$price,NOW(),$status)";
+        $Stmt = $db->prepare($insertProductQuery);
+        if($Stmt->execute()){
+            echo "Product inserted successfully";
+        }
+    }
+
+    
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +96,7 @@ include_once('../includes/connectDatabase.php');
                         $brands = $SelectStmt->fetchAll();
                         foreach($brands as $brand){
                            $title = $brand['brand_title'];
-                            $id = $category['brand_id'];
+                            $id = $brand['brand_id'];
                             echo "<option value='$id'>$title</option>";
                 
                         }
