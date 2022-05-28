@@ -119,15 +119,29 @@
         <ul class="navbar-nav me-auto text-center">
             <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h4>Categories</h4></a></li>
             <?php
-              $SelectStmt = $db->prepare('SELECT * FROM `categories`');
-              $SelectStmt->execute();
-              $categories = $SelectStmt->fetchAll();
-              foreach($categories as $category){
-                $title = $category['categorie_title'];
-                $id = $category['categorie_id'];
-                echo "<li class='nav-item'><a href='index.php?category=$id' class='nav-link text-light'>$title</a></li>";
+              
+              $genderStmt = $db -> prepare('SELECT * FROM `gender`');
+              
+              $genderStmt -> execute();
+              
+              $genders = $genderStmt ->fetchAll();
+              foreach($genders as $gender) {
+                
+                $genderTitle = $gender['gender'];
+                $genderId = $gender['gender_id'];
+                $SelectStmt = $db->prepare("SELECT * FROM `categories` WHERE gender_id = $genderId");
+                $SelectStmt->execute();
+                $categories = $SelectStmt->fetchAll();
+                echo "<li class='nav-item bg-light'>$genderTitle</li>";
+               foreach($categories as $category){
+                $catetitle = $category['categorie_title'];
+                $cateid = $category['categorie_id'];
+                
+               
+                echo "<li class='nav-item'><a href = 'index.php?categorie=$cateid&gender=$genderId' class='nav-link text-light'>$catetitle</a></li>";
                 
               }
+            }
             ?>
         </ul>
     </div>

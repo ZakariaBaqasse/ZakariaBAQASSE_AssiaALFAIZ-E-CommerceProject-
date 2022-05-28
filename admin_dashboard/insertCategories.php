@@ -1,9 +1,10 @@
 <?php
  include_once('../includes/connectDatabase.php');
  if(isset($_POST['insert-categ'])){
-    if(!empty($_POST['categ-title']) ){
+  // if(isset($_POST['categ-title']) && isset($_POST['categorie_gender']) ){
+    if(!empty($_POST['categ-title']) && !empty($_POST['categorie_gender']) ){
       $categorie_title = htmlspecialchars($_POST['categ-title']);
-      $gender_id = $_POST['categorie_gender'];}
+      $gender_id = $_POST['categorie_gender'];
       try{
       $selectSmt = $db->prepare("SELECT * FROM `categories` WHERE categorie_title = '$categorie_title' and gender_id=$gender_id");
       $selectSmt->execute();
@@ -20,10 +21,12 @@
     }catch(PDOException $e){
       echo "Error: " . $e->getMessage();
     }
-    }
+  }
     else{
-      echo "Title cannot be empty";
+      echo "Title cannot and/or gender cannot be empty";
     }
+    }
+    
  
 ?>
 <h2 class="text-center mt-1">Insert Category</h2>
