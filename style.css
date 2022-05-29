@@ -5,8 +5,8 @@
 }
 
 .card-img-top {
-    height: 200px;
-    width: 50%;
+    height: 300px;
+    width: 70%;
     object-fit: contain;
     margin: 0 auto;
 }

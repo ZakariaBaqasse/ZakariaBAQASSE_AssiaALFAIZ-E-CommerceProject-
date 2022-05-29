@@ -70,26 +70,9 @@ if(isset($_POST['insert_product'])){
                 <label for="keywords" class="form-label">Product keywords</label>
                 <input type="text" name="keywords" id="keywords" class="form-control" placeholder="Enter Product keywords" autocomplete="off" required>
             </div>
-             <!--categories-->
-             <div class="form-outline mb-4 w-50 m-auto">
-                 <select name="product_categories" id="" class="form-select">
-                     <option value="">Select a category</option>
-                     <?php
-                        $SelectStmt = $db->prepare('SELECT * FROM `categories`');
-                        $SelectStmt->execute();
-                        $categories = $SelectStmt->fetchAll();
-                        foreach($categories as $category){
-                           $title = $category['categorie_title'];
-                            $id = $category['categorie_id'];
-                            echo "<option value='$id'>$title</option>";
-                
-                        }
-                     ?>
-                 </select>
-             </div>
-             <!--Gender-->
-             <div class="form-outline mb-4 w-50 m-auto">
-                 <select name="product_gender" id="" class="form-select">
+            <!--Gender-->
+            <div class="form-outline mb-4 w-50 m-auto">
+                 <select name="product_gender" id="category_gender" class="form-select">
                      <option value="">Select a gender</option>
                      <?php
                         $SelectStmt = $db->prepare('SELECT * FROM `gender`');
@@ -104,6 +87,24 @@ if(isset($_POST['insert_product'])){
                      ?>
                  </select>
              </div>
+             <!--categories-->
+             <div class="form-outline mb-4 w-50 m-auto" >
+                 <select name="product_categories" class="form-select" id="category_select">
+                     <option value="">Select a category</option>
+                     <?php
+                        /*$SelectStmt = $db->prepare('SELECT * FROM `categories`');
+                        $SelectStmt->execute();
+                        $categories = $SelectStmt->fetchAll();
+                        foreach($categories as $category){
+                           $title = $category['categorie_title'];
+                            $id = $category['categorie_id'];
+                            echo "<option value='$id'>$title</option>";
+                
+                        }*/
+                     ?>
+                 </select>
+             </div>
+             
               <!--brands-->
               <div class="form-outline mb-4 w-50 m-auto">
                  <select name="product_brands" id="" class="form-select">
@@ -147,6 +148,6 @@ if(isset($_POST['insert_product'])){
             </div>
         </form>
     </div>
-    
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>

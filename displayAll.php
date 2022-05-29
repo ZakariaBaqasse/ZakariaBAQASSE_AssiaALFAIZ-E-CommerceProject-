@@ -73,7 +73,7 @@
         <!--Products-->
         <div class="row">
         <?php
-          getProducts();
+          displayAllProducts();
           searchProducts();
           getUniqueCategory();
           getUniqueBrand();
