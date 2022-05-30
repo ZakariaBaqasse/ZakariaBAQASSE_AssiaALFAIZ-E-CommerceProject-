@@ -8,20 +8,25 @@
       $selectSmt->execute();
       $title = $selectSmt->fetchColumn();
       if($title>0){
-        echo "Brand already exists in database";
+        echo "<div class='alert alert-warning w-70 text-center' role='alert'>
+        Brand already exists in the database
+      </div>";
       }
       else{
       $stmt = $db->prepare("INSERT INTO `brands` (brand_title) values ('$brand_title')");
       if($stmt->execute()){
-        echo '<p class="successInsert">Brand has been inserted successfully</p>';
-      }
+        echo "<div class='alert alert-success w-70 text-center' role='alert'>
+        Brand successfully added to the database
+      </div>";}
     }
     }catch(PDOException $e){
       echo "Error: " . $e->getMessage();
     }
     }
     else{
-      echo "Title cannot be empty";
+      echo"<div class='alert alert-danger w-70 text-center' role='alert'>
+      Title cannot be empty
+    </div>";
     }
  }
 ?>

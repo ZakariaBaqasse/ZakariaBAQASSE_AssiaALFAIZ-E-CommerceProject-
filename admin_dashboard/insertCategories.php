@@ -10,20 +10,25 @@
       $selectSmt->execute();
       $title = $selectSmt->fetchColumn();
       if($title>0){
-        echo "Categorie already exists in database";
+        echo "<div class='alert alert-warning w-70 text-center mt-2' role='alert'>
+        Categorie already exists in the database
+      </div>";
       }
       else{
       $stmt = $db->prepare("INSERT INTO `categories` (categorie_title,gender_id) values ('$categorie_title',$gender_id)");
       if($stmt->execute()){
-        echo '<p class="successInsert">Category has been inserted successfully</p>';
-      }
+        echo "<div class='alert alert-success w-70 text-center' role='alert'>
+        Categorie added successfully to the database
+      </div>";}
     }
     }catch(PDOException $e){
       echo "Error: " . $e->getMessage();
     }
   }
     else{
-      echo "Title cannot and/or gender cannot be empty";
+      echo"<div class='alert alert-danger w-70 text-center mt-2' role='alert'>
+      Title and/or gender cannot be empty
+    </div>";
     }
     }
     

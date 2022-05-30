@@ -30,7 +30,9 @@ if(isset($_POST['insert_product'])){
                                values ('$product_title','$description','$keywords','$product_categories','$product_brands','$image1','$image2','$image3',$price,NOW(),$status,$gender)";
         $Stmt = $db->prepare($insertProductQuery);
         if($Stmt->execute()){
-            echo "Product inserted successfully";
+            echo"<div class='alert alert-success w-70 text-center' role='alert'>
+            Product added successfully
+          </div>";
         }
     }
 

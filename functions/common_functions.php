@@ -30,8 +30,8 @@ function getProducts(){
          <div class='card-body'>
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
-           <p class='card-text'>$price MAD</p>
-           <a href='#' class='btn btn-info'>Add to cart</a>
+           <p class='card-text'>Price: $price MAD</p>
+           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
          </div>
        </div>
@@ -68,8 +68,8 @@ function displayAllProducts() {
          <div class='card-body'>
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
-           <p class='card-text'>$price MAD</p>
-           <a href='#' class='btn btn-info'>Add to cart</a>
+           <p class='card-text'>Price: $price MAD</p>
+           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
         
          </div>
@@ -115,8 +115,8 @@ function getUniqueCategory(){
          <div class='card-body'>
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
-           <p class='card-text'>$price MAD</p>
-           <a href='#' class='btn btn-info'>Add to cart</a>
+           <p class='card-text'>Price: $price MAD</p>
+           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
         </div>
        </div>
@@ -160,8 +160,8 @@ function getUniqueBrand(){
          <div class='card-body'>
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
-           <p class='card-text'>$price MAD</p>
-           <a href='#' class='btn btn-info'>Add to cart</a>
+           <p class='card-text'>Price: $price MAD</p>
+           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
            </div>
        </div>
@@ -246,8 +246,8 @@ function searchProducts(){
          <div class='card-body'>
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
-           <p class='card-text'>$price MAD</p>
-           <a href='#' class='btn btn-info'>Add to cart</a>
+           <p class='card-text'>Price: $price MAD</p>
+           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
          </div>
        </div>
@@ -287,8 +287,8 @@ function displayDetails(){
          <div class='card-body'>
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
-           <p class='card-text'>$price MAD</p>
-           <a href='#' class='btn btn-info'>Add to cart</a>
+           <p class='card-text'>Price: $price MAD</p>
+           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='index.php' class='btn btn-secondary'>Go Home</a>
          </div>
        </div>
@@ -314,6 +314,69 @@ function displayDetails(){
 }
 }
 }
+
+//getting ip address
+function getIPAddress() {  
+  //whether ip is from the share internet  
+   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+              $ip = $_SERVER['HTTP_CLIENT_IP'];  
+      }  
+  //whether ip is from the proxy  
+  elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+              $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+   }  
+//whether ip is from the remote address  
+  else{  
+           $ip = $_SERVER['REMOTE_ADDR'];  
+   }  
+   return $ip;  
+}  
+//$ip = getIPAddress();  
+//echo 'User Real IP Address - '.$ip; 
+
+//inserting cart items
+function cart(){
+  if(isset($_GET['addCart'])){
+    global $db;
+    $ip = getIPAddress();
+    $product = $_GET['addCart'];
+    $selectSmt = "select * from `cart_details` where product_id =$product and ip_address ='$ip'";
+    $stmt = $db->prepare($selectSmt);
+    $stmt->execute();
+    $result = $stmt->rowCount();
+    if($result>0){
+      echo "<div class='alert alert-warning w-70 text-center' role='alert'>
+      Product already added to cart!
+    </div>";
+    
+      //header('Location: '.$_SERVER['PHP_SELF']);
+    }
+    else{
+      $insert = "insert into `cart_details`(product_id, ip_address,quantity) values($product,'$ip',0)";
+      $insertStmt = $db->prepare($insert);
+      $insertStmt->execute();
+      echo "<div class='alert alert-success w-70 text-center' role='alert'>
+      Product added to cart successfully!
+    </div>";
+      //header('Location: '.$_SERVER['PHP_SELF']);
+    }
+    
+}
+}
+
+//displaying number of products in cart
+/*function cartItemCount(){
+  
+    global $db;
+    $ip = getIPAddress();
+    
+    $selectSmt = "select * from `cart_details` where ip_address ='$ip'";
+    $stmt = $db->prepare($selectSmt);
+    $stmt->execute();
+    $itemsCount = $stmt->rowCount();
+    echo $itemsCount;
+    
+}*/
 
 
 ?>
