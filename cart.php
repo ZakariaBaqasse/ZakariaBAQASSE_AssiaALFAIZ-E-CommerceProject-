@@ -47,6 +47,7 @@
               $Items = $stmt->fetchAll();
               $total = 0;
               foreach($Items as $Item){
+                  $product_quantity = $Item['quantity'];
                   $product_id = $Item['product_id'];
                   $product_price = $Item['product_price'];
                   $product_title = $Item['product_title'];
@@ -70,13 +71,14 @@
                             <div class="product-price">
                                 <?php echo $product_price; ?> MAD</div>
                             <div class="product-quantity">
-                                <input type="number" value="1" min="1" name="quantity">
+                                <input type="number" value="<?php echo $product_quantity;?>" min="0" name="quantity">
                             </div>
                             <?php
                               $ip = getIPAddress();
                               if(isset($_POST['update'])){
                                   $quantity= $_POST['quantity'];
-                                  $updateQuery="update `cart_details` set quantity=$quantity where ip_address='$ip'";
+
+                                  $updateQuery="update `cart_details` set quantity=$quantity where ip_address='$ip' and product_id=$product_id";
                                   $updateStmt = $db->prepare($updateQuery);
                                   $updateStmt->execute();
                                   $total*=$quantity;
@@ -119,20 +121,27 @@
                                     </div>
 
          <?php
-             echo " <div class='my-3 mx-auto'>
-             <a href='index.php'>
-                 <button class='btn bg-info px-3 py-2 border-0 text-light'>Back To Shop</button>
-             </a>
-             <a href='#'>
-                 <button class='btn bg-success px-3 py-2 border-0 text-light'>Check out</button>
-             </a>
+         if(isset($_POST['home'])){
+             echo"<script>window.open('index.php','_self');</script>";
+         }
+         if(isset($_POST['payment'])){
+            echo"<script>window.open('checkout.php','_self');</script>";
+        }
 
-         </div'";
+             echo " <div class='my-3 mx-auto'>
+             <input type='submit' value='Continue Shopping' class='btn bg-info my-5 mx-4' name='home'>
+                   
+             <input type='submit' value='Checkout' class='btn bg-success my-5 mx-4' name='payment'>
+                   
+
+         </div>'";
               } else{
+                if(isset($_POST['home'])){
+                    echo"<script>window.open('index.php','_self');</script>";
+                }
                   echo "<h2 class='text-center text-danger'>Cart is empty</h2>"; 
-                  echo  "<a href='index.php'>
-                  <button class='btn bg-info px-3 py-2 border-0 text-light'>Back To Shop</button>
-              </a>";
+                  echo  "<input type='submit' value='Continue Shopping' class='btn bg-info my-5 mx-4' name='home'>
+                  ";
               }
          ?>
                                 </div>
