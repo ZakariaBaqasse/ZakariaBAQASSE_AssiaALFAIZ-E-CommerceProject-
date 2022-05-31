@@ -50,9 +50,10 @@ if(isset($_POST['insert_product'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/png" href="../images/online solution.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link rel="stylesheet" href="../style.css">
 </head>
-<body class="bg-light">
+<body class="bg-light m-0">
     <div class="container mt-3">
         <h1 class="text-center mb-2">Insert New Product</h1>
         <!--form-->
@@ -70,7 +71,7 @@ if(isset($_POST['insert_product'])){
              <!--keywords-->
              <div class="form-outline mb-4 w-50 m-auto">
                 <label for="keywords" class="form-label">Product keywords</label>
-                <input type="text" name="keywords" id="keywords" class="form-control" placeholder="Enter Product keywords" autocomplete="off" required>
+                <input type="text" name="keywords" id="keywords" class="form-control" placeholder="Enter Product keywords" autocomplete="off"  required>
             </div>
             <!--Gender-->
             <div class="form-outline mb-4 w-50 m-auto">
@@ -151,5 +152,6 @@ if(isset($_POST['insert_product'])){
         </form>
     </div>
     <script type="text/javascript" src="script.js"></script>
+    
 </body>
 </html>
