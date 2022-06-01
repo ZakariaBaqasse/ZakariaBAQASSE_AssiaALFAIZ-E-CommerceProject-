@@ -1,4 +1,5 @@
 <?php
+session_start();
  include_once("./includes/connectDatabase.php");
  include_once("./functions/common_functions.php");
 ?>
@@ -11,70 +12,128 @@
     </head>
 
     <body class="p-0">
-        <?php
-    include_once('./layout/navbar.php');
-    ?>
+        <!--navbar-->
+        <div class="container-fluid p-0">
+            <nav class="navbar navbar-expand-lg bg-info">
+                <div class="container-fluid">
+                    <img src="./images/online solution.png" alt="Store Logo" class="logo">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="displayAll.php">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+              else $count = 0;?>
+                                <a class="nav-link" href="cart.php">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    <sup>
+                                        <?php echo $count;?>
+                                    </sup>
+                                </a>
+                                </sup>
+                                </a>
+                            </li>
+
+                        </ul>
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
+                            <input type="submit" value="search" class="btn btn-outline-light" name="search_data_product">
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <!--navbar-->
+            <!--Login navbar-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Welcome Guest</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                </ul>
+            </nav>
+            <!--Welcome message-->
+            <div class="bg-light">
+                <h3 class="text-center">Online Store</h3>
+                <p class="text-center">Welcome to our online Store !</p>
+            </div>
             <h1>Shopping Cart</h1>
 
             <div class="shopping-cart mx-3">
                 <form action="" method="post">
-                    <!--div class="column-labels">
-                        <label class="product-image">Image</label>
-                        <label class="product-details">Product</label>
-                        <label class="product-price">Price</label>
-                        <label class="product-quantity">Quantity</label>
-                        <label class="product-quantity">Check item to remove from cart</label>
-                        <label class="product-removal">Remove</label>
-                        <label class="product-line-price">Total</label>
-                    </div-->
+
                     <?php
-              $ip = getIPAddress();
-              
-              $selectSmt = "select * from cart_details join products on products.product_id = cart_details.product_id where cart_details.ip_address='$ip'";
-              $stmt = $db->prepare($selectSmt);
-              $stmt->execute();
-              $numOfItems = $stmt->rowCount();
-              if($numOfItems>0){
-                  echo " <div class='column-labels'>
+                        $total =[];
+                        if(!isset($_SESSION['cart'])||count($_SESSION['cart'])==0){
+                            
+                            echo "<h2 class='text-center text-danger'>Cart is empty</h2>"; 
+                            echo  "<button type='button' class='btn btn-info'><a class='text-light text-decoration-none' href='index.php'>Continue Shopping</a></button>";
+                            array_push($total,0);
+                        }
+                        else{
+                            echo " <div class='column-labels'>
                   <label class='product-image'>Image</label>
                   <label class='product-details'>Product</label>
                   <label class='product-price'>Price</label>
                   <label class='product-quantity'>Quantity</label>
-                  <label class='product-quantity'>Check item to remove from cart</label>
+                  <label class='product-quantity'>Remove from cart</label>
                   <label class='product-removal'>Remove</label>
                   <!--label class='product-line-price'>Total</label-->
               </div>";
-              $Items = $stmt->fetchAll();
-              $total = 0;
-              foreach($Items as $Item){
-                  $product_quantity = $Item['quantity'];
-                  $product_id = $Item['product_id'];
-                  $product_price = $Item['product_price'];
-                  $product_title = $Item['product_title'];
-                  $product_image = $Item['product_image1'];
-                  $product_description = $Item['product_description'];
-                  $price = array($Item['product_price']);
-                  $totalPrice = array_sum($price);
-                  $total+=$totalPrice;
-            ?>
-                        <div class="product">
-                            <div class="product-image">
-                                <img src="./admin_dashboard/productsImages/<?php echo $product_image;?>">
-                            </div>
-                            <div class="product-details">
-                                <div class="product-title">
-                                    <?php echo $product_title; ?>
-                                </div>
-                                <p class="product-description">
-                                    <?php echo $product_description; ?>.</p>
-                            </div>
-                            <div class="product-price">
-                                <?php echo $product_price; ?> MAD</div>
-                            <div class="product-quantity">
-                                <input type="number" value="<?php echo $product_quantity;?>" min="0" name="quantity">
-                            </div>
-                            <?php
-                              $ip = getIPAddress();
+                            $products_id = array_column($_SESSION['cart'],'product_id');
+                            
+                            foreach($products_id as $id){
+                                $select = "select * from products where product_id = $id";
+                                $stmt = $db->prepare($select);
+                                $stmt->execute();
+                                $product = $stmt->fetch();
+                                array_push($total, $product['product_price']);
+                                displayCartItems($product['product_image1'], $product['product_description'], $product['product_price'], $product['product_title'],$product['product_id']);
+                            }
+                            
+                           if(isset($_POST['delete'])){
+
+                             foreach($_POST['remove'] as $item){
+                               foreach($_SESSION['cart'] as $key=>$value){
+                                   if($value['product_id'] == $item){
+                                       unset($_SESSION['cart'][$key]);
+                                       //echo "<script>window.location='cart.php;</script>";
+                                   }
+                               }
+                           }
+                        }
+                   
+                                echo " <div class='mb-3 mx-auto'>
+                                <button type='button' class='btn btn-info'><a class='text-light text-decoration-none' href='index.php'>Continue Shopping</a></button>
+                                 
+                                <button type='button' class='btn btn-success'><a class='text-light text-decoration-none' href='checkout.php'>Checkout</a></button>
+                                      
+                   
+                            </div>'";
+                            echo "<div class='product-removal w-100 d-flex justify-content-end'>
+                            <input type='submit' value='Remove Checked Items' class='btn bg-danger mb-5 mx-4' name='delete'>
+                        </div>";
+                        }
+                     ?>
+
+                        <?php
+                             /* $ip = getIPAddress();
                               if(isset($_POST['update'])){
                                   $quantity= $_POST['quantity'];
 
@@ -82,71 +141,34 @@
                                   $updateStmt = $db->prepare($updateQuery);
                                   $updateStmt->execute();
                                   $total*=$quantity;
-                              }
+                              }*/
                             ?>
-                                <div class="product-removal">
-                                    <input type="checkbox" value="<?php echo $product_id; ?>" name="remove[]" class="ms-5">
+                            <!--div class="product-removal">
+                                    <input type="checkbox" value="" name="remove[]" class="ms-5">
 
-                                </div>
+                                </div-->
 
-                                <div class="product-removal">
+                            <!--div class="product-removal">
                                     <input type="submit" value="Update" class="btn bg-info ms-5" name="update">
 
-                                </div>
-                                <!--div class="product-line-price">25.98</div-->
-                        </div>
-                        <?php
-              }
-         ?>
-                            <div class="product-removal w-100 d-flex justify-content-end">
-                                <input type="submit" value="Remove Checked Items" class="btn bg-danger my-5 mx-4" name="delete">
-                            </div>
-                            <?php
-       if(isset($_POST['delete'])){
-           foreach($_POST['remove'] as $remove_id){
-           $deleteItem = "delete from `cart_details` where product_id = $remove_id";
-           $delteStmt = $db->prepare($deleteItem);
-           if($delteStmt->execute()){
-               echo "<script>window.open('cart.php','_self');</script>";
-           }
-        }
-       }
-     ?>
+                                </div-->
+                            <!--div class="product-line-price">25.98</div-->
+            </div>
 
-                                <div class="totals">
-                                    <div class="totals-item me-5 mb-3">
-                                        <label>Subtotal</label>
-                                        <div class="totals-value" id="cart-subtotal">
-                                            <?php echo $total; ?> MAD</div>
-                                    </div>
+            
+         
+           
+            <div class="totals mb-5">
+                <div class="totals-item me-5 mb-3">
+                    <label>Subtotal</label>
+                    <div class="totals-value" id="cart-subtotal">
+                        <?php echo array_sum($total); ?> MAD</div>
+                </div>
 
-         <?php
-         if(isset($_POST['home'])){
-             echo"<script>window.open('index.php','_self');</script>";
-         }
-         if(isset($_POST['payment'])){
-            echo"<script>window.open('checkout.php','_self');</script>";
-        }
 
-             echo " <div class='my-3 mx-auto'>
-             <input type='submit' value='Continue Shopping' class='btn bg-info my-5 mx-4' name='home'>
-                   
-             <input type='submit' value='Checkout' class='btn bg-success my-5 mx-4' name='payment'>
-                   
-
-         </div>'";
-              } else{
-                if(isset($_POST['home'])){
-                    echo"<script>window.open('index.php','_self');</script>";
-                }
-                  echo "<h2 class='text-center text-danger'>Cart is empty</h2>"; 
-                  echo  "<input type='submit' value='Continue Shopping' class='btn bg-info my-5 mx-4' name='home'>
-                  ";
-              }
-         ?>
-                                </div>
-                </form>
-                <!--div class="my-3 mx-auto">
+            </div>
+            </form>
+            <!--div class="my-3 mx-auto">
                     <a href="index.php">
                         <button class="btn bg-info px-3 py-2 border-0 text-light">Back To Shop</button>
                     </a>
@@ -155,11 +177,11 @@
                     </a>
 
                 </div-->
-            </div>
+        </div>
 
 
-            <script type="text/javascript" src="./customScripts/cartScript.js"></script>
-            <?php include_once("./layout/head.php") ?>
+        <script type="text/javascript" src="./customScripts/cartScript.js"></script>
+        <?php include_once("./layout/head.php") ?>
     </body>
 
     </html>

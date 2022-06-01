@@ -1,6 +1,7 @@
 <?php
   include_once('./includes/connectDatabase.php');
   include_once('./functions/common_functions.php');
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     </head>
-<body>
+<body class="p-0">
     <!--Navbar-->
     <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg bg-info">
@@ -40,9 +41,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i><sup id="numItems">  </sup></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Total Price: <span id="totalPrice"></span></a>
-        </li>
+       
        </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
@@ -73,7 +72,7 @@
         <!--Products-->
         <div class="row">
         <?php
-         cart();
+          cart();
           displayAllProducts();
           searchProducts();
           getUniqueCategory();

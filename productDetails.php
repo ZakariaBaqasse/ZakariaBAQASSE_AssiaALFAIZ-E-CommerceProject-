@@ -1,6 +1,8 @@
 <?php
+
   include_once('./includes/connectDatabase.php');
   include_once('./functions/common_functions.php');
+  cart();
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -18,7 +20,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-    <body>
+    <body class="p-0">
         <!--Navbar-->
         <div class="container-fluid p-0">
             <nav class="navbar navbar-expand-lg bg-info">
@@ -48,9 +50,7 @@
                                     <sup id="numItems"></sup>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Total Price: <span id="totalPrice"></span></a>
-                            </li>
+                            
                         </ul>
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
@@ -86,7 +86,6 @@
                         
                     </div>
                     <?php
-          cart();
           searchProducts();
           getUniqueCategory();
           getUniqueBrand();

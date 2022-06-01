@@ -336,47 +336,59 @@ function getIPAddress() {
 
 //inserting cart items
 function cart(){
+  session_start();
+  global $db;
   if(isset($_GET['addCart'])){
-    global $db;
-    $ip = getIPAddress();
-    $product = $_GET['addCart'];
-    $selectSmt = "select * from `cart_details` where product_id =$product and ip_address ='$ip'";
-    $stmt = $db->prepare($selectSmt);
-    $stmt->execute();
-    $result = $stmt->rowCount();
-    if($result>0){
-      echo "<div class='alert alert-warning w-70 text-center' role='alert'>
-      Product already added to cart!
-    </div>";
-    
-      //header('Location: '.$_SERVER['PHP_SELF']);
+    if(isset($_SESSION['cart'])){
+      $arrayOfItemsId=array_column($_SESSION['cart'],"product_id");
+      
+      if(in_array($_GET['addCart'],$arrayOfItemsId)){
+        echo "<div class='alert alert-warning w-70 text-center' role='alert'>
+        Product already added to cart!
+      </div>";
+      }else{
+        //return number of ids in cart session
+        $numOfItems = count($_SESSION['cart']);
+        $itemsarray = array('product_id' => $_GET['addCart']);
+        $_SESSION['cart'][$numOfItems]=$itemsarray;
+        echo "<div class='alert alert-success w-70 text-center' role='alert'>
+        Product added to cart successfully!
+      </div>";
+      }
+    }else{
+      $itemsarray = array('product_id' => $_GET['addCart']);
+        $_SESSION['cart'][0]=$itemsarray;
+        echo "<div class='alert alert-success w-70 text-center' role='alert'>
+        Product added to cart successfully!
+      </div>";
     }
-    else{
-      $insert = "insert into `cart_details`(product_id, ip_address,quantity) values($product,'$ip',0)";
-      $insertStmt = $db->prepare($insert);
-      $insertStmt->execute();
-      echo "<div class='alert alert-success w-70 text-center' role='alert'>
-      Product added to cart successfully!
-    </div>";
-      //header('Location: '.$_SERVER['PHP_SELF']);
-    }
-    
 }
 }
 
-//displaying number of products in cart
-/*function cartItemCount(){
-  
-    global $db;
-    $ip = getIPAddress();
-    
-    $selectSmt = "select * from `cart_details` where ip_address ='$ip'";
-    $stmt = $db->prepare($selectSmt);
-    $stmt->execute();
-    $itemsCount = $stmt->rowCount();
-    echo $itemsCount;
-    
-}*/
+function displayCartItems($product_image, $product_description, $product_price, $product_title,$product_id){
+   $element = "
+   <div class='product'>
+   <div class='product-image'>
+       <img src='./admin_dashboard/productsImages/$product_image'>
+   </div>
+   <div class='product-details'>
+       <div class='product-title'>
+           $product_title
+       </div>
+       <p class='product-description'>
+           $product_description</p>
+   </div>
+   <div class='product-price'>
+       $product_price MAD</div>
+   <div class='product-quantity'>
+       <input type='number' value='0' min='0' name='quantity'>
+   </div>
+   <input type='checkbox' value='$product_id' class='btn bg-danger mt-3 mx-4' name='remove[]'>
+   </div>";
+   
+
+   echo $element;
+}
 
 
 ?>
