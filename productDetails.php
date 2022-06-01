@@ -39,17 +39,16 @@
                                 <a class="nav-link" href="displayAll.php">Products</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Register</a>
+                                <a class="nav-link" href="./usersArea/register.php">Register</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                    <sup id="numItems"></sup>
-                                </a>
-                            </li>
+        <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+              else $count = 0;?>
+          <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php echo $count;?></sup></a></sup></a>
+        </li>
                             
                         </ul>
                         <form class="d-flex">
@@ -66,8 +65,8 @@
                         <a class="nav-link" href="#">Welcome Guest</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
+          <a class="nav-link" href="./usersArea/login.php">Login</a>
+      </li>
                 </ul>
             </nav>
             <!--Welcome message-->

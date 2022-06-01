@@ -33,7 +33,7 @@
           <a class="nav-link" href="displayAll.php">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="./usersArea/register.php">Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Contact</a>
@@ -57,8 +57,8 @@
           <a class="nav-link" href="#">Welcome Guest</a>
       </li> 
       <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
-      </li> 
+          <a class="nav-link" href="./usersArea/login.php">Login</a>
+      </li>
     </ul>
 </nav>
 <!--Welcome message-->

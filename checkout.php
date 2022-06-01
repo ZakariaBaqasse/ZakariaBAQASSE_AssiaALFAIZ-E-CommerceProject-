@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once("./layout/head.php"); ?>
+    <link rel="stylesheet" href="./usersArea/css/style.css" type="text/css" media="all">
     <title>Checkout</title>
 </head>
 <body>
@@ -36,10 +37,6 @@
         </li>
         
        </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-        <input type="submit" value="search" class="btn btn-outline-light" name="search_data_product">
-      </form>
     </div>
   </div>
 </nav>
@@ -61,9 +58,9 @@
 </div>
 <?php 
 if(isset($_SESSION['username'])){
-    include_once('./payment.php');
+  header('Location: ./payment.php');
 }else{
-    include_once('./usersArea/login.php');
+    header('Location: ./usersArea/login.php');
 }
 
 ?>
