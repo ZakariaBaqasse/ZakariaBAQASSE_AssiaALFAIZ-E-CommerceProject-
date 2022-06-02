@@ -69,7 +69,7 @@ function displayAllProducts() {
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
            <p class='card-text'>Price: $price MAD</p>
-           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
+           <a href='displayAll.php?addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
         
          </div>
@@ -116,7 +116,7 @@ function getUniqueCategory(){
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
            <p class='card-text'>Price: $price MAD</p>
-           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
+           <a href='index.php?categorie=$category&gender=$gender&addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
         </div>
        </div>
@@ -161,7 +161,7 @@ function getUniqueBrand(){
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
            <p class='card-text'>Price: $price MAD</p>
-           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
+           <a href='index.php?brand=$brand&addCart=$id' class='btn btn-info'>Add to cart</a>
            <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
            </div>
        </div>
@@ -288,7 +288,7 @@ function displayDetails(){
            <h5 class='card-title'>$title</h5>
            <p class='card-text'>$description</p>
            <p class='card-text'>Price: $price MAD</p>
-           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
+           <a href='productDetails.php?addCart=$id&product_id=$id'' class='btn btn-info'>Add to cart</a>
            <a href='index.php' class='btn btn-secondary'>Go Home</a>
          </div>
        </div>

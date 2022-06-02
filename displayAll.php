@@ -1,6 +1,7 @@
 <?php
   include_once('./includes/connectDatabase.php');
   include_once('./functions/common_functions.php');
+  cart();
   
 ?>
 <!DOCTYPE html>
@@ -38,8 +39,10 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Contact</a>
         </li>
+        <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+              else $count = 0;?>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i><sup id="numItems">  </sup></a>
+          <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php echo $count;?>  </sup></a>
         </li>
        
        </ul>
@@ -53,12 +56,24 @@
 <!--Login navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <ul class="navbar-nav me-auto">
-      <li class="nav-item">
-          <a class="nav-link" href="#">Welcome Guest</a>
-      </li> 
-      <li class="nav-item">
-          <a class="nav-link" href="./usersArea/login.php">Login</a>
-      </li>
+    <?php
+      if(isset($_SESSION['username'])){
+        $name = $_SESSION['username'];
+        echo "<li class='nav-item'>
+        <a class='nav-link' href='./usersArea/user_dashboard.php'>Welcome $name</a>
+    </li> 
+    <li class='nav-item'>
+        <a class='nav-link' href='./usersArea/logout.php'>Log out</a>
+    </li> ";
+      }else{
+        echo "<li class='nav-item'>
+        <a class='nav-link' href='#'>Welcome Guest</a>
+    </li> 
+    <li class='nav-item'>
+        <a class='nav-link' href='./usersArea/login.php'>Login</a>
+    </li> ";
+      }
+      ?>
     </ul>
 </nav>
 <!--Welcome message-->
@@ -72,7 +87,7 @@
         <!--Products-->
         <div class="row">
         <?php
-          cart();
+          
           displayAllProducts();
           searchProducts();
           getUniqueCategory();

@@ -1,4 +1,39 @@
+<?php
+include_once('../includes/connectDatabase.php');
+session_start();
+$_SESSION['username']='';
+if(isset($_SESSION['message'])){
+    $message = $_SESSION['message'];
+    echo "<div class='alert alert-success w-70 text-center mt-0' role='alert'>
+        $message
+      </div>";
+      unset($_SESSION['message']);
+}
+if(isset($_POST['login'])){
+    $user = htmlspecialchars($_POST['username']);
+    $password = htmlspecialchars($_POST['password']);
+    $select = "select * from `users` where username = '$user' or email = '$user'";
+    $stmt = $db->prepare($select);
+    $stmt->execute();
+    $result = $stmt->rowCount();
+    $data = $stmt->fetch();
+    if($result == 0){
+        echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
+        Wrong Username.
+      </div>";
+    }else{
+        if(password_verify($password,$data['password'])){
+            $_SESSION['username']=$user;
+            header("Location: ../index.php");
+        }else{
+            echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
+        Wrong Password
+      </div>";
+        }
+    }
+}
 
+?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -92,7 +127,7 @@
                         <p class="already"><a href="register.php">Forgot Password?</a></p>
                         
                         <div class="form-row button-login">
-                            <input type="submit" class="btn btn-login" value="Log IN" name="register">
+                            <input type="submit" class="btn btn-login" value="Log IN" name="login">
                         </div>
                     </div>
                 </fieldset>

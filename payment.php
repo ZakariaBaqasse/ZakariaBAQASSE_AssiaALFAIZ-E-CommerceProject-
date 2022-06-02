@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once("./layout/head.php"); ?>
+    <?php include_once("./layout/head.php"); 
+    session_start();
+    ?>
     <script src="https://use.fontawesome.com/fbf13eceb7.js"></script>
     	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -14,7 +16,69 @@
 </head>
 
 <body>
-    <?php include_once("./layout/navbar.php");?>
+<div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg bg-info">
+  <div class="container-fluid">
+    <img src="./images/online solution.png" alt="Store Logo" class="logo">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="displayAll.php">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./usersArea/register.php">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+        <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+              else $count = 0;?>
+          <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php echo $count;?></sup></a></sup></a>
+        </li>
+        
+       </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
+        <input type="submit" value="search" class="btn btn-outline-light" name="search_data_product">
+      </form>
+    </div>
+  </div>
+</nav>
+<!--Login navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <ul class="navbar-nav me-auto">
+      <?php
+      if(isset($_SESSION['username'])){
+        $name = $_SESSION['username'];
+        echo "<li class='nav-item'>
+        <a class='nav-link' href='./usersArea/user_dashboard.php'>Welcome $name</a>
+    </li> 
+    <li class='nav-item'>
+        <a class='nav-link' href='./usersArea/logout.php'>Log out</a>
+    </li> ";
+      }else{
+        echo "<li class='nav-item'>
+        <a class='nav-link' href='#'>Welcome Guest</a>
+    </li> 
+    <li class='nav-item'>
+        <a class='nav-link' href='./usersArea/login.php'>Login</a>
+    </li> ";
+      }
+      ?>
+    </ul>
+</nav>
+<!--Welcome message-->
+<div class="bg-light">
+    <h3 class="text-center">Online Store</h3>
+    <p class="text-center">Welcome to our online Store !</p>
+</div>
     <main>
 
      <!-- DEMO HTML -->

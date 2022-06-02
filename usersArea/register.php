@@ -5,9 +5,14 @@ session_start();
 ?>
 
 <?php
+$_SESSION['info']['username']='';
+$_SESSION['info']['email']='';
+$_SESSION['info']['address']='';
+$_SESSION['info']['phone']='';
 if (isset($_POST['register'])){
     $username= htmlspecialchars($_POST['username']);
     $password= htmlspecialchars($_POST['password']);
+    $hash_password = password_hash($password,PASSWORD_DEFAULT);
     $confirm= htmlspecialchars($_POST['confirm']);
     $email= htmlspecialchars($_POST['email']);
     $address= htmlspecialchars($_POST['address']);
@@ -18,10 +23,18 @@ if (isset($_POST['register'])){
         echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
         Password and confirm password not matched!
       </div>";
+      $_SESSION['info']['username']=$username;
+      $_SESSION['info']['email']=$email;
+      $_SESSION['info']['address']=$address;
+      $_SESSION['info']['phone']=$phone;
     }else if(!preg_match('/[0-9]{9,10}/',$phone)){
         echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
         Please provide a valid phone number!
       </div>";
+      $_SESSION['info']['username']=$username;
+      $_SESSION['info']['email']=$email;
+      $_SESSION['info']['address']=$address;
+      $_SESSION['info']['phone']=$phone;
     }else{
         $select1 ="select * from `users` where username = '$username'";
         $stmt = $db->prepare($select1);
@@ -36,20 +49,34 @@ if (isset($_POST['register'])){
             echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
         Username already Taken.
       </div>";
+      $_SESSION['info']['username']=$username;
+      $_SESSION['info']['email']=$email;
+      $_SESSION['info']['address']=$address;
+      $_SESSION['info']['phone']=$phone;
         }else if($result2>0){
             echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
         Email already Taken.
       </div>";
+      $_SESSION['info']['username']=$username;
+      $_SESSION['info']['email']=$email;
+      $_SESSION['info']['address']=$address;
+      $_SESSION['info']['phone']=$phone;
         }else{
-
+        
         move_uploaded_file($profileTmp,"./usersProfile/$profile");
         $insert = "insert into `users` (username,email,password,profile_picture,address,mobile) 
-                  values('$username', '$email', '$password', '$profile', '$address', '$phone')";
+                  values('$username', '$email', '$hash_password', '$profile', '$address', '$phone')";
         $stmt = $db->prepare($insert);
         if($stmt->execute()){
             echo "<div class='alert alert-success w-70 text-center mt-0' role='alert'>
         Account created successfully!
       </div>";
+      header("Location: ./login.php");
+      $_SESSION['message']="please login using your credentials";
+      $_SESSION['info']['username']='';
+      $_SESSION['info']['email']='';
+      $_SESSION['info']['address']='';
+      $_SESSION['info']['phone']='';
         }          
     }
 }
@@ -134,12 +161,12 @@ if (isset($_POST['register'])){
                         <div class="form-row">
                             <span class="fa fa-user"></span>
                            
-                            <input type="text" class="form-text" placeholder="User name" required name="username" autocomplete="off">
+                            <input type="text" class="form-text" placeholder="User name" required name="username" autocomplete="off" value="<?php echo  $_SESSION['info']['username']; ?>" autocomplete>
                         </div>
                         <div class="form-row">
                             <span class="fa fa-envelope"></span>
                             
-                            <input type="email" class="form-text" placeholder="Email Address" required name="email" autocomplete="off">
+                            <input type="email" class="form-text" placeholder="Email Address" required name="email" autocomplete="off" value="<?php echo  $_SESSION['info']['email'];?>">
                         </div>
                         <div class="form-row">
                             <span class="fa fa-lock"></span>
@@ -154,12 +181,12 @@ if (isset($_POST['register'])){
                         <div class="form-row">
                             <span class="fa fa-phone"></span>
                             
-                            <input type="text" class="form-text" placeholder="Phone Number" required name="phoneNumber" autocomplete="off">
+                            <input type="text" class="form-text" placeholder="Phone Number" required name="phoneNumber" autocomplete="off" value="<?php echo $_SESSION['info']['phone'];?>">
                         </div>
                         <div class="form-row">
                             <span class="fa fa-home"></span>
                             
-                            <input type="text" class="form-text" placeholder="Address" required name="address" autocomplete="off">
+                            <input type="text" class="form-text" placeholder="Address" required name="address" autocomplete="off" value="<?php echo  $_SESSION['info']['address'];?>">
                         </div>
                         <div class="form-row">
                             <span class="fa fa-image"></span>
