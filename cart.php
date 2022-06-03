@@ -2,6 +2,7 @@
 session_start();
  include_once("./includes/connectDatabase.php");
  include_once("./functions/common_functions.php");
+ $_SESSION['location'] ='../cart.php';
 ?>
     <!DOCTYPE html>
     <html lang="en">

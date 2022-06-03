@@ -3,6 +3,8 @@
   include_once('./includes/connectDatabase.php');
   include_once('./functions/common_functions.php');
   cart();
+  
+  $_SESSION['location'] ="../productDetails.php?product_id=" . $_GET['product_id'];
 ?>
     <!DOCTYPE html>
     <html lang="en">

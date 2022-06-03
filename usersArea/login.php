@@ -24,7 +24,7 @@ if(isset($_POST['login'])){
     }else{
         if(password_verify($password,$data['password'])){
             $_SESSION['username']=$user;
-            header("Location: ../index.php");
+            header("Location: ".$_SESSION['location']);
         }else{
             echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
         Wrong Password
