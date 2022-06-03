@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-    <body class="p-0">
+    <body class="p-0 mb-5">
         <!--Navbar-->
         <div class="container-fluid p-0">
             <nav class="navbar navbar-expand-lg bg-info">
@@ -97,9 +97,9 @@
             </div>
             <!--Products and side nav-->
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <!--Products-->
-                    <div class="row mt-5">
+                    <div class="row mt-2">
                         <?php
                         displayDetails();
                         ?>
@@ -112,30 +112,6 @@
         ?>
                 </div>
                 <!--col-->
-
-                <div class="col-md-2 bg-secondary p-0">
-                    <!--Sidenav-->
-                    <ul class="navbar-nav me-auto text-center">
-                        <li class="nav-item bg-info">
-                            <a href="#" class="nav-link text-light">
-                                <h4>Brands</h4>
-                            </a>
-                        </li>
-                        <?php
-              getBrands();
-            ?>
-                    </ul>
-                    <ul class="navbar-nav me-auto text-center">
-                        <li class="nav-item bg-info">
-                            <a href="#" class="nav-link text-light">
-                                <h4>Categories</h4>
-                            </a>
-                        </li>
-                        <?php
-             getCategories();
-            ?>
-                    </ul>
-                </div>
             </div>
         </div>
 
