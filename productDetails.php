@@ -17,6 +17,8 @@
             crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="details.css">
         <link rel="stylesheet" href="style.css">
     </head>
 
@@ -97,7 +99,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <!--Products-->
-                    <div class="row">
+                    <div class="row mt-5">
                         <?php
                         displayDetails();
                         ?>
@@ -150,7 +152,7 @@
 
 
 
-
+        <script type="text/javascript" src="./customScripts/slideshowscript.js"></script>
         <script type="text/javascript" src="./customScripts/indexScript.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
