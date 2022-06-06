@@ -18,10 +18,11 @@
         $total += $price;
     }
       $insert_order = "Insert into `orders` (user_id, amount_due,invoice_number,total_products,order_date,order_status) 
-                       values($uId,$total,$invoice,$numOfproducts,NOW(),'$status'";
+                       values($uId,$total,$invoice,$numOfproducts,NOW(),'$status')";
       $insertstmt = $db->prepare($insert_order);
       if($insertstmt->execute()){
           $_SESSION['insert']='Order submitted successfully';
+          unset($_SESSION['cart']);
           header('Location: ./user_dashboard.php');
       }else{
           echo $insertstmt->error_log;
