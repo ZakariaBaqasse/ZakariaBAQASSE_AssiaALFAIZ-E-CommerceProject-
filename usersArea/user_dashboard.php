@@ -25,30 +25,46 @@ if(isset($_SESSION['username'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/userDashboardStyle.css">
+    <link rel="stylesheet" href="../newStyle.css">
+    <style>
+      body{
+        height: 100vh;
+      }
+    </style>
   </head>
 
   <body class="p-0">
     <!--Navbar-->
-    <div class="container-fluid p-0">
-      <nav class="navbar navbar-expand-lg bg-info">
-        <div class="container-fluid">
-          <img src="./images/online solution.png" alt="Store Logo" class="logo">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="../displayAll.php">Products</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
+    <div class="container-fluid p-0 h-100">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="../index.php">Organic</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav m-auto my-2 my-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="../index.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../displayAll.php">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./usersArea/register.php">Register</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropbtn nav-link">Brands</button>
+              <div class="dropdown-content">
+                <?php
+             getBrands();
+            ?>
+              </div>
+            </div>
+            <?php
+         getCategories();
+        ?>
               <li class="nav-item">
                 <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
               else $count = 0;?>
@@ -62,10 +78,14 @@ if(isset($_SESSION['username'])){
                 </a>
               </li>
 
-            </ul>
-          </div>
+          </ul>
+          <form class="d-flex">
+            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn0" type="submit">Search</button>
+          </form>
         </div>
-      </nav>
+      </div>
+    </nav>
       <!--Login navbar-->
       <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <ul class="navbar-nav me-auto">
@@ -80,7 +100,7 @@ if(isset($_SESSION['username'])){
       ?>
         </ul>
       </nav>
-      <div class="row">
+      <div class="row h-100">
         <div class="profile-nav col-md-3">
           <div class="panel ms-5">
             <div class="user-heading round">
@@ -147,5 +167,10 @@ if(isset($_SESSION['username'])){
 
 
       <?php
+          include('../layout/footer.php');
+          
+        
 }
 ?>
+  </body>
+  </html>

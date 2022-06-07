@@ -1,6 +1,7 @@
 <?php
 session_start();
  include_once("../includes/connectDatabase.php");
+ include_once('../functions/usersFunctions.php');
  //include_once("../functions/common_functions.php");
 ?>
 
@@ -91,6 +92,7 @@ if (isset($_POST['register'])){
     <head>
         <?php include_once("../layout/head.php"); ?>
         <!-- style CSS -->
+        <link rel="stylesheet" href="../newStyle.css">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
 
 <!-- fontawesome -->
@@ -98,51 +100,67 @@ if (isset($_POST['register'])){
 
 <!-- google fonts -->
 <link href="//fonts.googleapis.com/css?family=Mukta:300,400,500" rel="stylesheet">
+
         <title>Register</title>
+
+        <style>
+
+        </style>
     </head>
 
     <body class="p-0">
         <!--navbar-->
         <div class="container-fluid p-0">
-            <nav class="navbar navbar-expand-lg bg-info">
-                <div class="container-fluid">
-                    <img src="./images/online solution.png" alt="Store Logo" class="imglogo">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../displayAll.php">Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                                <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+        <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="../index.php">Organic</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav m-auto my-2 my-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="../index.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../displayAll.php">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./usersArea/register.php">Register</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropbtn nav-link">Brands</button>
+              <div class="dropdown-content">
+                <?php
+             getBrands();
+            ?>
+              </div>
+            </div>
+            <?php
+         getCategories();
+        ?>
+              <li class="nav-item">
+                <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
               else $count = 0;?>
-                                <a class="nav-link" href="cart.php">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                    <sup>
-                                        <?php echo $count;?>
-                                    </sup>
-                                </a>
-                                </sup>
-                                </a>
-                            </li>
+                <a class="nav-link" href="../cart.php">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <sup>
+                    <?php echo $count;?>
+                  </sup>
+                </a>
+                </sup>
+                </a>
+              </li>
 
-                        </ul>
-                        
-                    </div>
-                </div>
-            </nav>
+          </ul>
+          <form class="d-flex">
+            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
             <!--navbar-->
             <section class="main">
         <div class="bottom-grid">

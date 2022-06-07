@@ -15,44 +15,61 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="newStyle.css">
     </head>
 <body class="p-0">
     <!--Navbar-->
     <div class="container-fluid p-0">
-    <nav class="navbar navbar-expand-lg bg-info">
-  <div class="container-fluid">
-    <img src="./images/online solution.png" alt="Store Logo" class="logo">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="displayAll.php">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./usersArea/register.php">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.php">Organic</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav m-auto my-2 my-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="index.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="displayAll.php">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./usersArea/register.php">Register</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropbtn nav-link">Brands</button>
+              <div class="dropdown-content">
+                <?php
+             getBrands();
+            ?>
+              </div>
+            </div>
+            <?php
+         getCategories();
+        ?>
+              <li class="nav-item">
+                <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
               else $count = 0;?>
-        <li class="nav-item">
-          <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php echo $count;?>  </sup></a>
-        </li>
-       
-       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-        <input type="submit" value="search" class="btn btn-outline-light" name="search_data_product">
-      </form>
-    </div>
-  </div>
-</nav>
+                <a class="nav-link" href="cart.php">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <sup>
+                    <?php echo $count;?>
+                  </sup>
+                </a>
+                </sup>
+                </a>
+              </li>
+
+          </ul>
+          <form class="d-flex">
+            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
 <!--Login navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <ul class="navbar-nav me-auto">
@@ -83,7 +100,7 @@
 </div>
 <!--Products and side nav-->
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <!--Products-->
         <div class="row">
         <?php
@@ -96,21 +113,7 @@
            </div>
         <!--col-->
     </div>
-    <div class="col-md-2 bg-secondary p-0">
-        <!--Sidenav-->
-        <ul class="navbar-nav me-auto text-center">
-            <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h4>Brands</h4></a></li>
-            <?php
-              getBrands();
-            ?>
-        </ul>
-        <ul class="navbar-nav me-auto text-center">
-            <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h4>Categories</h4></a></li>
-            <?php
-             getCategories();
-            ?>
-        </ul>
-    </div>
+   
 </div>
 
 
@@ -123,7 +126,10 @@
 
 
 
+    <?php
+include('./layout/footer.php');
 
+?>
 
 
 

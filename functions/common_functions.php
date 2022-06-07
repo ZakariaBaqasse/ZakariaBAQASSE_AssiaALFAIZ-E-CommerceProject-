@@ -11,7 +11,7 @@ function getProducts(){
     global $db;
     if(!isset($_GET['categorie']) && !isset($_GET['gender'])){
      if(!isset($_GET['brand']) && !isset($_GET['search_data_product'])){
-    $selectSmt = "select * from `products` order by rand() limit 0,4";
+    $selectSmt = "select * from `products` order by rand() limit 0,3";
     $stmt = $db->prepare($selectSmt);
     $stmt->execute();
     $products = $stmt->fetchAll();
@@ -23,23 +23,58 @@ function getProducts(){
       $image = $product['product_image1'];
       $price = $product['product_price'];
       echo"
- 
-     <div class='col-md-4 mb-2'>
-       <div class='card'>
-         <img src='./admin_dashboard/productsImages/$image' class='card-img-top'  alt='...'>
-         <div class='card-body'>
-           <h5 class='card-title'>$title</h5>
-           <p class='card-text'>$description</p>
-           <p class='card-text'>Price: $price MAD</p>
-           <a href='index.php?addCart=$id' class='btn btn-info'>Add to cart</a>
-           <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
-         </div>
-       </div>
-     </div>
-   
- <!--row --> 
+      <div class='col-md-4 mb-2'>
+      <div class='card'>
+  <img src='./admin_dashboard/productsImages/$image' class='card-img-top' alt='Fissure in Sandstone'/>
+  <div class='card-body'>
+    <h5 class='card-title'>$title</h5>
+    <p class='card-text'>$description</p>
+    <p class='card-text'>$price MAD</p>
+    <a href='index.php?addCart=$id' class='btn btn-success'>Add to cart</a>
+    <a href='productDetails.php?product_id=$id' class='btn btn-primary'>See details</a>
+  
+  </div>
+</div>
+</div>
+          
  ";
     }
+}
+}
+}
+
+function getMoreProducts(){
+  global $db;
+  if(!isset($_GET['categorie']) && !isset($_GET['gender'])){
+   if(!isset($_GET['brand']) && !isset($_GET['search_data_product'])){
+  $selectSmt = "select * from `products` order by rand() limit 0,6";
+  $stmt = $db->prepare($selectSmt);
+  $stmt->execute();
+  $products = $stmt->fetchAll();
+ 
+  foreach ($products as $product){
+      $id = $product['product_id'];
+    $title = $product['product_title'];
+    $description = $product['product_description'];
+    $image = $product['product_image1'];
+    $price = $product['product_price'];
+    echo"
+    <div class='col-md-4 mb-2'>
+    <div class='card'>
+<img src='./admin_dashboard/productsImages/$image' class='card-img-top' alt='Fissure in Sandstone'/>
+<div class='card-body'>
+  <h5 class='card-title'>$title</h5>
+  <p class='card-text'>$description</p>
+  <p class='card-text'>$price MAD</p>
+  <a href='index.php?addCart=$id' class='btn btn-success'>Add to cart</a>
+  <a href='productDetails.php?product_id=$id' class='btn btn-primary'>See details</a>
+
+</div>
+</div>
+</div>
+        
+";
+  }
 }
 }
 }
@@ -185,7 +220,7 @@ function getBrands(){
               foreach($brands as $brand){
                 $title = $brand['brand_title'];
                 $id = $brand['brand_id'];
-                echo "<li class='nav-item'><a href='index.php?brand=$id' class='nav-link text-light'>$title</a></li>";
+                echo "<a href='index.php?brand=$id'>$title</a>";
                 
               }
 }
@@ -205,18 +240,32 @@ function getCategories(){
       $SelectStmt = $db->prepare("SELECT * FROM `categories` WHERE gender_id = $genderId");
       $SelectStmt->execute();
       $categories = $SelectStmt->fetchAll();
-      echo "<li class='nav-item bg-light'>$genderTitle</li>";
+      //echo "<li class='nav-item bg-light'>$genderTitle</li>";
+      echo "<div class='dropdown'>
+      <button class='dropbtn nav-link'>For $genderTitle</button>
+      <div class='dropdown-content'>";
      foreach($categories as $category){
       $catetitle = $category['categorie_title'];
       $cateid = $category['categorie_id'];
       
      
-      echo "<li class='nav-item'><a href = 'index.php?categorie=$cateid&gender=$genderId' class='nav-link text-light'>$catetitle</a></li>";
+      echo "<a href = 'index.php?categorie=$cateid&gender=$genderId' class='nav-link'>$catetitle</a>";
       
     }
+    echo "</div>
+    </div>";
   }
 }
-
+/*
+<div class="dropdown">
+          <button class="dropbtn">For Men</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+*/
 
 //searching products
 function searchProducts(){
