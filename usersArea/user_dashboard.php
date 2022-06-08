@@ -80,8 +80,8 @@ if(isset($_SESSION['username'])){
 
           </ul>
           <form class="d-flex">
-            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn0" type="submit">Search</button>
+            <input class="px-2 search" type="search" placeholder="Search" name="search_data_product">
+            <input class="btn0" type="submit" value="Search" name="search_data">
           </form>
         </div>
       </div>
@@ -149,6 +149,7 @@ if(isset($_SESSION['username'])){
         </div>
         <div class="col-md-9">
           <?php get_user_pending_orders(); 
+               searchProducts();
           if(isset($_GET['editProfile'])){
             include('./editProfile.php');
           }

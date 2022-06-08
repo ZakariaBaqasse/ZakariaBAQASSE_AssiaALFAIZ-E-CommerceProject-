@@ -79,9 +79,7 @@ h1 {
 }
 
 .card:hover {
-    box-shadow: -6px -8px 73px 13px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: -6px -8px 73px 13px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: -6px -8px 73px 13px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.26);
     transition: 0.5s;
 }
 

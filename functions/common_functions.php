@@ -34,8 +34,8 @@ function getProducts(){
     <a href='productDetails.php?product_id=$id' class='btn btn-primary'>See details</a>
   
   </div>
-</div>
-</div>
+ </div>
+ </div>
           
  ";
     }
@@ -85,35 +85,44 @@ function displayAllProducts() {
     global $db;
     if(!isset($_GET['categorie']) && !isset($_GET['gender'])){
      if(!isset($_GET['brand']) && !isset($_GET['search_data_product'])){
-    $selectSmt = "select * from `products` order by rand() ";
-    $stmt = $db->prepare($selectSmt);
-    $stmt->execute();
-    $products = $stmt->fetchAll();
-    foreach ($products as $product){
-        $id = $product['product_id'];
-      $title = $product['product_title'];
-      $description = $product['product_description'];
-      $image = $product['product_image1'];
-      $price = $product['product_price'];
-      echo"
- 
-     <div class='col-md-4 mb-2'>
-       <div class='card'>
-         <img src='./admin_dashboard/productsImages/$image' class='card-img-top'  alt='...'>
-         <div class='card-body'>
-           <h5 class='card-title'>$title</h5>
-           <p class='card-text'>$description</p>
-           <p class='card-text'>Price: $price MAD</p>
-           <a href='displayAll.php?addCart=$id' class='btn btn-info'>Add to cart</a>
-           <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
-        
+      $selectGender = "select * from `gender`";
+      $genderStmt = $db->prepare($selectGender);
+      $genderStmt->execute();
+      $genders = $genderStmt->fetchAll();
+      foreach($genders as $gender){
+      $genderId =  $gender['gender_id'];
+      $genderTitle = strtoupper($gender['gender']);
+      echo "<h2 class='text-center my-5'>$genderTitle's Products</h2>";
+      $selectSmt = "select * from `products` where gender_id = $genderId order by rand() ";
+      $stmt = $db->prepare($selectSmt);
+      $stmt->execute();
+      $products = $stmt->fetchAll();
+      foreach ($products as $product){
+          $id = $product['product_id'];
+        $title = $product['product_title'];
+        $description = $product['product_description'];
+        $image = $product['product_image1'];
+        $price = $product['product_price'];
+        echo"
+   
+       <div class='col-md-4 mb-4 px-4'>
+         <div class='card'>
+           <img src='./admin_dashboard/productsImages/$image' class='card-img-top'  alt='...'>
+           <div class='card-body'>
+             <h5 class='card-title'>$title</h5>
+             <p class='card-text'>$description</p>
+             <p class='card-text'>Price: $price MAD</p>
+             <a href='displayAll.php?addCart=$id' class='btn btn-info'>Add to cart</a>
+             <a href='productDetails.php?product_id=$id' class='btn btn-secondary'>View More</a>
+          
+           </div>
          </div>
        </div>
-     </div>
-   
- <!--row --> 
- ";
-    }
+     
+   <!--row --> 
+   ";
+      }
+   }
 }
 }
 }
@@ -133,8 +142,19 @@ function getUniqueCategory(){
     
    
     if ($numOfRows == 0) {
-        echo "<h2 class='text-center text-danger'>Category out of Stock</h2>";
-    }
+        echo "<h2 class='text-center text-danger my-5'>Category out of Stock</h2>";
+    }else{
+    $selectCategory = "select * from `categories` where categorie_id =$category and gender_id=$gender";
+    $categoryStmt = $db->prepare($selectCategory);
+    $categoryStmt->execute();
+    $categoryFound = $categoryStmt->fetch();
+    $categoryTitle = $categoryFound['categorie_title'];
+    $selectGender = "select * from `gender` where gender_id=$gender";
+    $genderStmt = $db->prepare($selectGender);
+    $genderStmt->execute();
+    $genderFound = $genderStmt->fetch();
+    $genderTitle = strtoupper($genderFound['gender']);
+    echo "<h2 class='text-center my-5'>$genderTitle's $categoryTitle</h2>";
     $products = $stmt->fetchAll();
     foreach ($products as $product){
         $id = $product['product_id'];
@@ -144,7 +164,7 @@ function getUniqueCategory(){
       $price = $product['product_price'];
       echo"
  
-     <div class='col-md-4 mb-2'>
+     <div class='col-md-4 mb-2 px-4'>
        <div class='card'>
          <img src='./admin_dashboard/productsImages/$image' class='card-img-top'  alt='...'>
          <div class='card-body'>
@@ -160,6 +180,7 @@ function getUniqueCategory(){
  <!--row --> 
  ";
     }
+}
 }
 }
 
@@ -178,8 +199,15 @@ function getUniqueBrand(){
     
    
     if ($numOfRows == 0) {
-        echo "<h2 class='text-center text-danger'>Brand out of Stock</h2>";
+        echo "<h2 class='text-center text-danger my-5'>Brand out of Stock</h2>";
     }
+    else{
+      $getBRands = "select * from `brands` where brand_id = $brand";
+      $brandStmt = $db->prepare($getBRands);
+      $brandStmt->execute();
+      $foundBrand = $brandStmt->fetch();
+      $brandTitle = $foundBrand['brand_title'];
+      echo "<h2 class='text-center my-5'>Latest $brandTitle Products</h2>";
     $products = $stmt->fetchAll();
     foreach ($products as $product){
         $id = $product['product_id'];
@@ -189,7 +217,7 @@ function getUniqueBrand(){
       $price = $product['product_price'];
       echo"
  
-     <div class='col-md-4 mb-2'>
+     <div class='col-md-4 mb-4 px-4'>
        <div class='card'>
          <img src='./admin_dashboard/productsImages/$image' class='card-img-top'  alt='...'>
          <div class='card-body'>
@@ -205,6 +233,7 @@ function getUniqueBrand(){
  <!--row --> 
  ";
     }
+}
 }
 }
 
@@ -256,30 +285,22 @@ function getCategories(){
     </div>";
   }
 }
-/*
-<div class="dropdown">
-          <button class="dropbtn">For Men</button>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </div>
-*/
+
 
 //searching products
 function searchProducts(){
     global $db;
     if(isset($_GET['search_data_product'])){
         if(isset($_GET['search_data'])){
-     $search_query = $_GET['search_data'];
-    $selectSmt = "select * from `products` where product_keywords like '%$search_query%'";
+     $search_query = htmlspecialchars($_GET['search_data_product']);
+    $selectSmt = "select * from `products` where  LOWER(product_keywords) like LOWER('%$search_query%')";
     $stmt = $db->prepare($selectSmt);
     $stmt->execute();
     $numOfRows = $stmt->rowCount();
     if ($numOfRows == 0) {
         echo "<h2 class='text-center text-danger'>No results Match!</h2>";
-    }
+    }else{
+      echo "<h2 class='text-center my-5'>Results For: $search_query</h2>";
     $products = $stmt->fetchAll();
     foreach ($products as $product){
         $id = $product['product_id'];
@@ -289,7 +310,7 @@ function searchProducts(){
       $price = $product['product_price'];
       echo"
  
-     <div class='col-md-4 mb-2'>
+     <div class='col-md-4 mb-2 px-4'>
        <div class='card'>
          <img src='./admin_dashboard/productsImages/$image' class='card-img-top'  alt='...'>
          <div class='card-body'>
@@ -305,6 +326,7 @@ function searchProducts(){
  <!--row --> 
  ";
     }
+}
 }
 }
 }
@@ -376,24 +398,7 @@ function displayDetails(){
 }
 }
 
-//getting ip address
-function getIPAddress() {  
-  //whether ip is from the share internet  
-   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
-              $ip = $_SERVER['HTTP_CLIENT_IP'];  
-      }  
-  //whether ip is from the proxy  
-  elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
-              $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
-   }  
-//whether ip is from the remote address  
-  else{  
-           $ip = $_SERVER['REMOTE_ADDR'];  
-   }  
-   return $ip;  
-}  
-//$ip = getIPAddress();  
-//echo 'User Real IP Address - '.$ip; 
+
 
 //inserting cart items
 function cart(){
@@ -441,9 +446,6 @@ function displayCartItems($product_image, $product_description, $product_price, 
    </div>
    <div class='product-price'>
        $product_price MAD</div>
-   <div class='product-quantity'>
-       <input type='number' value='0' min='0' name='quantity'>
-   </div>
    <input type='checkbox' value='$product_id' class='btn bg-danger mt-3 mx-4' name='remove[]'>
    </div>";
    

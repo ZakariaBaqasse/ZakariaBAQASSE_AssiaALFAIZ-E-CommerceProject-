@@ -68,8 +68,8 @@
 
           </ul>
           <form class="d-flex">
-            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn0" type="submit">Search</button>
+            <input class="px-2 search" type="search" placeholder="Search" name="search_data_product">
+            <input class="btn0" type="submit" value="Search" name="search_data">
           </form>
         </div>
       </div>
@@ -99,7 +99,7 @@
     </nav>
     <!--Welcome message-->
     <?php
-     if(!isset($_GET['brand'])&&!isset($_GET['categorie'])&&!isset($_GET['gender'])){
+     if(!isset($_GET['brand'])&&!isset($_GET['categorie'])&&!isset($_GET['gender']) && !isset($_GET['search_data'])){
     ?>
     <section class="main">
       <div class="container py-5">

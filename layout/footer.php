@@ -41,6 +41,6 @@
           </div>
         </div>
         <hr>
-        <p class="text-center">Copyright ©2017-2022 Lingua.com. All Rights Reserved </p>
+        <p class="text-center">Copyright ©2017-2022 Organic. All Rights Reserved </p>
       </div>
     </section>

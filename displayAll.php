@@ -64,8 +64,8 @@
 
           </ul>
           <form class="d-flex">
-            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn0" type="submit">Search</button>
+            <input class="px-2 search" type="search" placeholder="Search" name="search_data_product">
+            <input class="btn0" type="submit" value="Search" name="search_data">
           </form>
         </div>
       </div>
@@ -94,10 +94,7 @@
     </ul>
 </nav>
 <!--Welcome message-->
-<div class="bg-light">
-    <h3 class="text-center">Online Store</h3>
-    <p class="text-center">Welcome to our online Store !</p>
-</div>
+
 <!--Products and side nav-->
 <div class="row">
     <div class="col-md-12">
