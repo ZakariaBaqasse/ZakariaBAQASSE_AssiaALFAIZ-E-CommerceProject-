@@ -43,7 +43,7 @@
           <td>$oInvoice</td>
           <td>$oProducts</td>
           <td>$oStatus</td>
-        s  </tr>";
+          </tr>";
       }
     ?>
 

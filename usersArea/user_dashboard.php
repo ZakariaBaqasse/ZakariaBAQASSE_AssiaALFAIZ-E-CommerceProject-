@@ -1,11 +1,17 @@
 <?php
 session_start();
-if(isset($_SESSION['insert'])){
-    $message = $_SESSION['insert'];
+if(isset($_SESSION['paid'])){
+    $message = $_SESSION['paid'];
     echo "<div class='alert alert-success w-70 text-center mt-0' role='alert'>
         $message
       </div>";
-      unset($_SESSION['insert']);
+      unset($_SESSION['paid']);
+}else if(isset($_SESSION['unpaid'])){
+  $message = $_SESSION['unpaid'];
+  echo "<div class='alert alert-danger w-70 text-center mt-0' role='alert'>
+      $message
+    </div>";
+    unset($_SESSION['unpaid']);
 }
 include_once('../includes/connectDatabase.php');
 include_once('../functions/usersFunctions.php');

@@ -1,64 +1,82 @@
 <?php
 include_once('./includes/connectDatabase.php');
+include_once('./functions/common_functions.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once("./layout/head.php"); 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php include_once("./layout/head.php"); 
     session_start();
     ?>
-    <script src="https://use.fontawesome.com/fbf13eceb7.js"></script>
-    	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/paymentStyle.css">
-    <title>Checkout</title>
+  <script src="https://use.fontawesome.com/fbf13eceb7.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/paymentStyle.css">
+  <link rel="stylesheet" href="newStyle.css">
+  <title>Checkout</title>
 </head>
 
 <body class="p-0">
-<div class="container-fluid p-0">
-    <nav class="navbar navbar-expand-lg bg-info">
-  <div class="container-fluid">
-    <img src="./images/online solution.png" alt="Store Logo" class="logo">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="displayAll.php">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./usersArea/register.php">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-        <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
+  <div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.php">Organic</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav m-auto my-2 my-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="index.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="displayAll.php">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./usersArea/register.php">Register</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropbtn nav-link">Brands</button>
+              <div class="dropdown-content">
+                <?php
+             getBrands();
+            ?>
+              </div>
+            </div>
+            <?php
+         getCategories();
+        ?>
+              <li class="nav-item">
+                <?php if(isset($_SESSION['cart']))$count = count($_SESSION['cart']);
               else $count = 0;?>
-          <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php echo $count;?></sup></a></sup></a>
-        </li>
-        
-       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-        <input type="submit" value="search" class="btn btn-outline-light" name="search_data_product">
-      </form>
-    </div>
-  </div>
-</nav>
-<!--Login navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-    <ul class="navbar-nav me-auto">
-      <?php
+                <a class="nav-link" href="cart.php">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <sup>
+                    <?php echo $count;?>
+                  </sup>
+                </a>
+                </sup>
+                </a>
+              </li>
+
+          </ul>
+          <form class="d-flex">
+            <input class="px-2 search" type="search" placeholder="Search" name="search_data_product">
+            <input class="btn0" type="submit" value="Search" name="search_data">
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!--Login navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+      <ul class="navbar-nav me-auto">
+        <?php
       if(isset($_SESSION['username'])){
         $name = $_SESSION['username'];
         echo "<li class='nav-item'>
@@ -76,30 +94,26 @@ include_once('./includes/connectDatabase.php');
     </li> ";
       }
       ?>
-    </ul>
-</nav>
-<!--Welcome message-->
-<div class="bg-light">
-    <h3 class="text-center">Online Store</h3>
-    <p class="text-center">Welcome to our online Store !</p>
-</div>
+      </ul>
+    </nav>
+    <!--Welcome message-->
+
     <main>
 
-     <!-- DEMO HTML -->
-     <div class="container">
-  <div class="py-5 text-center">
-    
-   </div>
+      <!-- DEMO HTML -->
+      <div class="container">
+        <div class="py-5 text-center">
 
-  <div class="row">
-    <div class="col-md-4 order-md-2 mb-4">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Your cart</span>
-        <span class="badge badge-secondary badge-pill">3</span>
-      </h4>
-      <ul class="list-group mb-3">
+        </div>
 
-      <?php
+        <div class="row">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill">3</span>
+          </h4>
+          <ul class="list-group mb-3">
+
+            <?php
       $total = 0;
       $user = $_SESSION['username'];
       $get_user = "select * from `users` where username = '$user'";
@@ -126,32 +140,42 @@ include_once('./includes/connectDatabase.php');
       </li>";
       }
       ?>
-        
-        <li class="list-group-item d-flex justify-content-between">
-          <span>Total (MAD)</span>
-          <strong><?php echo $total; ?></strong>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-8 order-md-1">
-    
 
-        <h4 class="mb-3">Payment</h4>
-        <hr class="mb-4">
-        <button class="btn btn-primary btn-lg btn-block"><a href='./usersArea/order.php?user=<?php echo $currentId; ?>' class='text-light text-decoration-none'>Place an order</a></button>
-        <button class="btn btn-primary btn-lg btn-block"><a href='#' class='text-light text-decoration-none' >Pay now with paypal</a></button>
-      
-      </form>
-    </div>
-  </div>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total (MAD)</span>
+                <strong id="total">
+                  <?php echo $total; ?>
+                </strong>
+              </li>
+          </ul>
+
+        </div>
+        <div class="row">
 
 
+          <h4 class="mb-3">Payment</h4>
+          <hr class="mb-4">
+          <div id="paypal-button" class="w-50 mx-auto my-5">
+           
+          </div>
+
+          </form>
+        </div>
+
+
+      </div>
+    </main>
+ 
 
 
 
 
 
-    <?php include_once("./layout/scripts.php"); ?>
+        <?php include_once("./layout/scripts.php"); 
+             include_once("./layout/footer.php");
+        ?>
+        <script src="https://www.paypal.com/sdk/js?client-id=AfnYrtJAA2TsLrCx41dOrXQDgQ36DLihNrBfgxThxkcRjlTA8HjGli30PIJ9fcqNRf_BiD-vESmzokc6&currency=USD&disable-funding=credit,card"></script>
+        <script src="./customScripts/paymentScript.js"></script>
 </body>
 
 </html>
