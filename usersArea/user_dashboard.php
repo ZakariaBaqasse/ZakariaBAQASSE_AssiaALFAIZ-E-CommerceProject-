@@ -132,10 +132,6 @@ if(isset($_SESSION['username'])){
 
             <ul class="nav nav-pills nav-stacked d-flex flex-column ms-5 mt-3">
               <li class="mb-3">
-                <a href="user_dashboard.php">
-                  <i class="fa-solid fa-bag-shopping"></i> Pending Orders</a>
-              </li>
-              <li class="mb-3">
                 <a href="user_dashboard.php?myOrders">
                   <i class="fa-solid fa-bag-shopping"></i> My Orders</a>
               </li>
@@ -154,7 +150,9 @@ if(isset($_SESSION['username'])){
           </div>
         </div>
         <div class="col-md-9">
-          <?php get_user_pending_orders(); 
+          <?php if(!isset($_GET['editProfile'])&&!isset($_GET['myOrders'])){
+             echo "<h3 class='text-center text-success mt-5 mb-3'>Welcome To your Dashoard $name !</h3>";
+          } 
                searchProducts();
           if(isset($_GET['editProfile'])){
             include('./editProfile.php');
