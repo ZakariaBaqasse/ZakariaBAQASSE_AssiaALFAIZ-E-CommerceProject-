@@ -22,6 +22,7 @@ if(isset($_SESSION['username'])){
     <link rel="stylesheet" href="./css/weatherApp.css">
     <!-- <link rel="stylesheet" href="../newStyle.css"> -->
     <script src="./weatherScripts/weatherScript.js" defer></script>
+    <link rel="shortcut icon" href="./images/Untitled design (3).png" type="image/x-icon">
 </head>
 
 <body >

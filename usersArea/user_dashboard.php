@@ -58,7 +58,7 @@ if(isset($_SESSION['username'])){
               <a class="nav-link" href="../displayAll.php">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./usersArea/register.php">Register</a>
+              <a class="nav-link" href="./weatherApp.php">Forecast</a>
             </li>
             <div class="dropdown">
               <button class="dropbtn nav-link">Brands</button>
