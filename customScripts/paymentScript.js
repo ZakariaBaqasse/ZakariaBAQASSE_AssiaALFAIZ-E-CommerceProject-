@@ -2,6 +2,7 @@
 let total = document.getElementById("total").textContent;
 const madToUsd = 0.1;
 total *= madToUsd;
+amountToPay = Math.round(total);
 
 paypal
     .Buttons({
@@ -13,7 +14,7 @@ paypal
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: total,
+                        value: amountToPay,
                     },
                 }, ],
             });

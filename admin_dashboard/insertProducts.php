@@ -138,7 +138,7 @@ if(isset($_POST['insert_product'])){
              <!--Image 3-->
              <div class="form-outline mb-4 w-50 m-auto">
                 <label for="image3" class="form-label">Product image 2</label>
-                <input type="file" name="image3" id="image3" class="form-control" required  accept="image/png,image/jpeg,image/jpg">
+                <input type="file" name="image3" id="image3" class="form-control" required  accept="image/png,image/jpeg,image/jpg,image/webp">
             </div>
             <!--Price-->
             <div class="form-outline mb-4 w-50 m-auto">

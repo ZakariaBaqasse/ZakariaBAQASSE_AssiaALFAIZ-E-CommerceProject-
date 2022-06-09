@@ -151,7 +151,7 @@ if(isset($_SESSION['username'])){
         </div>
         <div class="col-md-9">
           <?php if(!isset($_GET['editProfile'])&&!isset($_GET['myOrders'])){
-             echo "<h3 class='text-center text-success mt-5 mb-3'>Welcome To your Dashoard $name !</h3>";
+             echo "<h3 class='text-center text-success mt-5 mb-3'>Welcome To your Dashboard $name !</h3>";
           } 
                searchProducts();
           if(isset($_GET['editProfile'])){
